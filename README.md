@@ -34,7 +34,7 @@ The $http service returns a promise object. That means these functions are execu
 Because of this reason you ***cannot*** use the ```return``` value of the http service.
 
 ```javascript
-THIS WON'T WORK:
+THIS WILL NOT WORK:
 $scope.employees = $http.get('EmployeeService.asmx/GetAllEmployees');
 ```
 
