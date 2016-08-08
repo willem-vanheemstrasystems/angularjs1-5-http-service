@@ -47,11 +47,58 @@ $scope.employees = $http.get('EmployeeService.asmx/GetAllEmployees')
                     });
 ```
 
+Use the ```$log``` service to log the response object to the console.
 
+```javascript
+$scope.employees = $http.get('EmployeeService.asmx/GetAllEmployees')
+                    .then(function(response) {
+                        $scope.employees = response.data;
+                        $log.info(response);
+                    });
+```
+
+If there is an error processing the request, the errorCallback function is called.
+
+```javascript
+$scope.employees = $http.get('EmployeeService.asmx/GetAllEmployees')
+                    .then(function(response) {
+                        $scope.employees = response.data;
+                        $log.info(response);
+                    }, function(reason) {
+                        $scope.error = reason.data;
+                        $log.info(reason);
+                    });
+```
+
+See scriptA.js, indexA.html and stylesA.css how to implement this.
+
+You can also create separate functions and associate them as successCallback and errorCallback functions.
+
+```javascript
+var successCallBack = function(response) {
+    $scope.employees = response.data;
+    $log.info(response);
+};
+
+var errorCallBack = function(reason) {
+    $scope.error = reason.data;
+    $log.info(reason);
+};
+
+$scope.employees = $http.get('EmployeeService.asmx/GetAllEmployees')
+                    .then(successCallBack, errorCallBack);
+```
+
+See scriptB.js, indexB.html and stylesB.css how to implement this.
+
+Default transformations provided by angular's $http service
+
+- If the data property of the ***request*** configuration object contains a JavaScript object, it is automaticallt converted into a JSON object.
+
+- If a JSON ***response*** is detected, it is automatically converted into a JavaScript object.
 
 Watch the video how to create a Web Service in ASP.NET.
 ***This service is not included in our file, sorry.***
 
 All angular code is in these files, however.
 
-See script.js, index.html and styles.css how to implement this.
